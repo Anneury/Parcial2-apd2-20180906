@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
+	  <StartWorkingDirectory>$(MSBuildProjectDirectory)</StartWorkingDirectory>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Parcial2_apd2_20180906</RootNamespace>
   </PropertyGroup>
