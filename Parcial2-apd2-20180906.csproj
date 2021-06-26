@@ -9,4 +9,13 @@
     <Folder Include="Data\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Blazored.toast" Version="3.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameWorkCore.Sqlite" Version="5.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameWorkCore.Tools" Version="5.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
 </Project>
