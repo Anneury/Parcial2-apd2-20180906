@@ -5,4 +5,8 @@
     <RootNamespace>Parcial2_apd2_20180906</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
 </Project>
