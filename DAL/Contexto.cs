@@ -15,7 +15,7 @@ namespace Parcial2_apd2_20180906.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(@"Data Source = Cobros.Db");
+            optionsBuilder.UseSqlite(@"Data Source = Data/Cobros.Db");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
