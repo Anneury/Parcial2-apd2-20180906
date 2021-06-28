@@ -124,7 +124,11 @@ namespace Parcial2_apd2_20180906.BLL
 
             try
             {
-                cobros = contexto.Cobros.Where(e => e.CobroId == id).Include(e => e.Detalle).FirstOrDefault();
+                cobros = contexto.Cobros
+                    .Include(x => x.Detalle)
+                    .ThenInclude(Detalle => Detalle.Cobro)
+                    .Where(x => x.CobroId == id)
+                    .Single();
             }
             catch (Exception)
             {

@@ -12,8 +12,13 @@ namespace Parcial2_apd2_20180906.Models
         [Key]
         public int CobroId { get; set; }
         public DateTime Fecha { get; set; }
+
+        public int ClienteId { get; set; }
+        public Clientes Cliente { get; set; }
+
         public decimal Totales { get; set; }
         public double TotalCobro { get; set; }
+        
         public string Observaciones { get; set; }
 
         [ForeignKey("CobroId")]
