@@ -1,5 +1,136 @@
-﻿<h3>CClientes</h3>
+﻿@page "/CClientes"
+
+@using Parcial2_apd2_20180906.BLL;
+@using Parcial2_apd2_20180906.Models;
+@using Blazored.Toast;
+@using Blazored.Toast.Services;
+
+@inject IToastService toast
+
+<div class="card accordion">
+    <div class="card-header">
+        <h1>Consulta de Clientes</h1>
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col form-group">
+                <label>Filtrar por:</label>
+                <select @bind="Index" class="custom-select">
+                    <option value="-1" disabled>Seleccionar opción</option>
+                    <option value="0">Todo</option>
+                    <option value="1">Cliente Id</option>
+                    <option value="2">Nombres</option>
+                </select>
+            </div>
+
+
+            <div class="col form-group">
+                <label>Criterio:</label>
+                <div class="input-group">
+                    <input class="form-control" type="@(Index == 1 ? "number" : "text")" @bind-value="Criterio" placeholder="Ingrese el criterio a filtrar para obtener el cliente deseado" />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" @onclick="Buscar">
+                            <i class="oi oi-magnifying-glass" />
+                            Filtrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        @if (ListaClientes == null)
+        {
+            <div class="form-group">
+                <h2>No Posee datos... Agrega productos.</h2>
+            </div>
+        }
+        else
+        {
+            //consultas
+            <div class="form-group">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Cliente Id</th>
+                            <th>Nombres</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var cont in ListaClientes)
+                        {
+                            <tr>
+                                <td>@cont.ClienteId</td>
+                                <td>@cont.Nombres</td>
+                                <td>
+                                    <button class="btn  btn-danger" @onclick="() => Eliminar(cont.ClienteId)">
+                                        <i class="oi oi-trash" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        }
+    </div>
+    <div class="card-footer">
+    </div>
+</div>
 
 @code {
+    public int Index = -1;
+    public string Criterio = string.Empty;
+    List<Clientes> ListaClientes = new List<Clientes>();
+
+    protected override void OnInitialized()
+    {
+        Actualizar();
+    }
+    public void Actualizar()
+    {
+        ListaClientes = ClientesBLL.GetList(e => true);
+    }
+
+    void Buscar()
+    {
+        if (Index == 0)
+        {
+            ListaClientes = ClientesBLL.GetList(p => true).ToList();
+        }
+        else if (Index == 1)
+        {
+            int IdCliente = int.Parse(Criterio);
+            ListaClientes = ClientesBLL.GetList(p => p.ClienteId == IdCliente).ToList();
+
+        }
+        else if (Index == 2)
+        {
+            ListaClientes = ClientesBLL.GetList(p => p.Nombres.Contains(Criterio)).ToList();
+        }
+
+    }
+
+
+    private void Eliminar(int id)
+    {
+        bool Paso;
+
+
+        Paso = ClientesBLL.Eliminar(id);
+
+        if (Paso)
+        {
+            Actualizar();
+            toast.ShowSuccess("Transacción exitosa!");
+        }
+        else
+            toast.ShowError("No fue posible Eliminar este cliente.");
+        return;
+    }
 
 }
+
