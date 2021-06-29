@@ -1,5 +1,149 @@
-﻿<h3>CVentas</h3>
+﻿@page "/CVentas"
+
+@using Parcial2_apd2_20180906.BLL;
+@using Parcial2_apd2_20180906.Models;
+@using Blazored.Toast;
+@using Blazored.Toast.Services;
+
+@inject IToastService toast
+
+<div class="card accordion">
+    <div class="card-header">
+        <h1>Consulta de Ventas</h1>
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col form-group">
+                <label>Filtrar por:</label>
+                <select @bind="Index" class="custom-select">
+                    <option value="-1" disabled>Seleccionar opción</option>
+                    <option value="0">Todo</option>
+                    <option value="1">Venta Id</option>
+                    <option value="2">Cliente Id</option>
+                </select>
+            </div>
+
+
+            <div class="col form-group">
+                <label>Criterio:</label>
+                <div class="input-group">
+                    <input class="form-control" type="number" @bind-value="Criterio" placeholder="Ingrese el criterio a filtrar para obtener la venta deseada" />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" @onclick="Buscar"><i class="oi oi-magnifying-glass" />
+                            Filtrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        @if (ListaVentas == null)
+        {
+            <div class="form-group">
+                <h2>No Posee datos... Agrega productos.</h2>
+            </div>
+        }
+        else
+        {
+            //consultas
+            <div class="form-group">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Venta Id</th>
+                            <th>Fecha</th>
+                            <th>Cliente Id</th>
+                            <th>Monto</th>
+                            <th>Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!string.IsNullOrEmpty(TotalBalance.ToString()))
+                            TotalBalance = 0;
+
+                        @foreach (var cont in ListaVentas)
+                        {
+                            <tr>
+                                <td>@cont.VentaId</td>
+                                <td>@cont.Fecha</td>
+                                <td>@cont.ClienteId</td>
+                                <td>@cont.Monto</td>
+                                <td>@cont.Balance</td>
+                                <td>
+                                    <button class="btn  btn-danger" @onclick="() => Eliminar(cont.VentaId)">
+                                        <i class="oi oi-trash" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            TotalBalance += cont.Balance;
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        }
+    </div>
+    <div class="card-footer">
+        <div class="form-group text-left">
+            <label>Balance total: @TotalBalance</label>
+        </div>
+
+    </div>
+</div>
 
 @code {
+    public int Index = -1;
+    public double TotalBalance;
+    public int Criterio;
+    List<Ventas> ListaVentas = new List<Ventas>();
+
+    protected override void OnInitialized()
+    {
+        Actualizar();
+    }
+    public void Actualizar()
+    {
+        ListaVentas = VentasBLL.GetList(e => true);
+    }
+
+    void Buscar()
+    {
+        if (Index == 0)
+        {
+            ListaVentas = VentasBLL.GetList(p => true).ToList();
+        }
+        else if (Index == 1)
+        {
+
+            ListaVentas = VentasBLL.GetList(p => p.VentaId == Criterio).ToList();
+
+        }
+        else if (Index == 2)
+        {
+            ListaVentas = VentasBLL.GetList(p => p.ClienteId == Criterio).ToList();
+        }
+
+    }
+
+
+    private void Eliminar(int id)
+    {
+        bool Paso;
+
+
+            Paso = VentasBLL.Eliminar(id);
+
+            if (Paso)
+            {
+                Actualizar();
+                toast.ShowSuccess("Transacción exitosa!");
+            }
+            else
+                toast.ShowError("No fue posible Eliminar esta venta.");
+            return;
+    }
 
 }
