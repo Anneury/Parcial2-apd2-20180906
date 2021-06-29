@@ -1,7 +1,49 @@
-﻿@page "/p"
+﻿@page "/Cobros"
+@page "/Cobros/{CobroId:int}"
 
-<h3>RCobros</h3>
+@using Parcial2_apd2_20180906.BLL
+@using Parcial2_apd2_20180906.Models
+@using Blazored.Toast
+@using Blazored.Toast.Services
+
+@inject IToastService Toast
+
+<EditForm>
+    <DataAnnotationsValidator />
+
+    <div class="card">
+
+        <div class="card-footer">
+            <div class="form-group text-center" display: inline-block>
+
+                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">
+                    <i class="oi oi-file mr-2" width="30" height="30" viewBox="0 0 20 20" />Nuevo
+                </button>
+
+                <button type="submit" class="btn btn-lg btn-success">
+                    <i class="oi oi-account-login" style="transform:rotate(90deg)" width="30" height="30" viewBox="0 0 20 20" />Guardar
+                </button>
+
+                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">
+                    <i class="oi oi-trash mr-2" />Eliminar
+                </button>
+
+            </div>
+        </div>
+    </div>
+</EditForm>
 
 @code {
+    [Parameter]
+    public int CobroId { get; set; }
+
+    public void Nuevo()
+    {
+
+    }
+    public void Eliminar()
+    {
+
+    }
 
 }
