@@ -154,16 +154,61 @@
         Cobro = new Cobros();
         ListaClientes = ClientesBLL.GetList(e => true);
     }
-    public void Eliminar()
-    {
 
-    }
     public void Buscar()
     {
-
+        if (Cobro.CobroId > 0)
+        {
+            var cobro = CobrosBLL.Buscar(Cobro.CobroId);
+            if (cobro != null)
+                this.Cobro = cobro;
+            else
+            {
+                Toast.ShowError("Cobro no encontrado");
+                Nuevo();
+            }
+        }
+        else
+        {
+            Toast.ShowWarning("Debe ingresar un Id para buscar!");
+        }
     }
     public void Guardar()
     {
+        bool guardado;
+        if (Cobro.CobroId == 0)
+        {
+            Cobro.Detalle.RemoveAll(e => e.Cobrado == 0);
 
+            guardado = CobrosBLL.Guardar(Cobro);
+
+            if (guardado)
+            {
+                Toast.ShowSuccess("Transacción exitosa!");
+                Nuevo();
+            }
+            else
+            {
+                Toast.ShowError("Transacción fallida!");
+            }
+        }
+        else
+        {
+            Toast.ShowWarning("No puedes modificar los cobros.");
+        }
+    }
+    public void Eliminar()
+    {
+        bool Eliminado;
+
+        Eliminado = CobrosBLL.Eliminar(Cobro.CobroId);
+
+        if (Eliminado)
+        {
+            Nuevo();
+            Toast.ShowSuccess("Orden eliminada correctamente.");
+        }
+        else
+            Toast.ShowError("No fue posible eliminar esta orden.");
     }
 }
