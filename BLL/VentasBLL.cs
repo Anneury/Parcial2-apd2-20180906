@@ -145,5 +145,37 @@ namespace Parcial2_apd2_20180906.BLL
             }
             return Lista;
         }
+        public static List<CobrosDetalle> ObetenerVentasPendientes(int ClienteId)
+        {
+            var ListaPendientes = new List<CobrosDetalle>();
+            Contexto contexto = new Contexto();
+
+            try
+            {
+                var pendientes = contexto.Ventas
+                    .Where(e => e.ClienteId == ClienteId && e.Balance > 0)
+                    .AsNoTracking()
+                    .ToList();
+
+                foreach (var item in pendientes)
+                {
+                    ListaPendientes.Add(new CobrosDetalle
+                    {
+                        VentaId = item.VentaId,
+                        Venta = item,
+                        Cobrado = 0
+                    });
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                contexto.Dispose();
+            }
+            return ListaPendientes;
+        }
     }
 }
