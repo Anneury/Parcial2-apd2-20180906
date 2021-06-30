@@ -1,4 +1,4 @@
-﻿@page "/CVentas"
+﻿@page "/CCobros"
 
 @using Parcial2_apd2_20180906.BLL;
 @using Parcial2_apd2_20180906.Models;
@@ -9,7 +9,7 @@
 
 <div class="card accordion">
     <div class="card-header" style="background: #324A5F">
-        <h1 style="color:white">Consulta de Ventas</h1>
+        <h1 style="color:white">Consulta de Cobros</h1>
     </div>
 
     <div class="card-body">
@@ -20,7 +20,7 @@
                 <select @bind="Index" class="custom-select">
                     <option value="-1" disabled>Seleccionar opción</option>
                     <option value="0">Todo</option>
-                    <option value="1">Venta Id</option>
+                    <option value="1">Cobro Id</option>
                     <option value="2">Cliente Id</option>
                 </select>
             </div>
@@ -41,10 +41,10 @@
 
         </div>
 
-        @if (ListaVentas == null)
+        @if (ListaCobros == null)
         {
             <div class="form-group">
-                <h2>No Posee datos... Agrega Ventas.</h2>
+                <h2>No Posee datos... Agrega Cobros.</h2>
             </div>
         }
         else
@@ -54,32 +54,34 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Venta Id</th>
+                            <th>Cobro Id</th>
                             <th>Fecha</th>
                             <th>Cliente Id</th>
-                            <th>Monto</th>
-                            <th>Balance</th>
+                            <th>Totales</th>
+                            <th>Total Cobrado</th>
+                            <th>Observaciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if (!string.IsNullOrEmpty(TotalBalance.ToString()))
-                            TotalBalance = 0;
+                        @if (!string.IsNullOrEmpty(TotalCobrado.ToString()))
+                            TotalCobrado = 0;
 
-                        @foreach (var cont in ListaVentas)
+                        @foreach (var cont in ListaCobros)
                         {
                             <tr>
-                                <td>@cont.VentaId</td>
+                                <td>@cont.CobroId</td>
                                 <td>@cont.Fecha</td>
                                 <td>@cont.ClienteId</td>
-                                <td>@cont.Monto</td>
-                                <td>@cont.Balance</td>
+                                <td>@cont.Totales</td>
+                                <td>@cont.TotalCobro</td>
+                                <td>@cont.Observaciones</td>
                                 <td>
-                                    <button class="btn  btn-danger" @onclick="() => Eliminar(cont.VentaId)">
+                                    <button class="btn  btn-danger" @onclick="() => Eliminar(cont.CobroId)">
                                         <i class="oi oi-trash" aria-hidden="true"></i>
                                     </button>
                                 </td>
                             </tr>
-                            TotalBalance += cont.Balance;
+                            TotalCobrado += cont.TotalCobro;
                         }
                     </tbody>
                 </table>
@@ -89,18 +91,17 @@
     </div>
     <div class="card-footer">
         <div class="form-group text-left">
-            <label>Balance total: @TotalBalance</label>
-            <h6 style="text-align:right">Hecho por Anneury Sosa...</h6>
+            <label>Balance total: @TotalCobrado</label>
         </div>
-
+        <h6 style="text-align:right">Hecho por Anneury Sosa...</h6>
     </div>
 </div>
 
 @code {
     public int Index = -1;
-    public double TotalBalance;
+    public double TotalCobrado;
     public string Criterio;
-    List<Ventas> ListaVentas = new List<Ventas>();
+    List<Cobros> ListaCobros = new List<Cobros>();
 
     protected override void OnInitialized()
     {
@@ -108,24 +109,24 @@
     }
     public void Actualizar()
     {
-        ListaVentas = VentasBLL.GetList(e => true);
+        ListaCobros = CobrosBLL.GetList(e => true);
     }
 
     void Buscar()
     {
         if (Index == 0)
         {
-            ListaVentas = VentasBLL.GetList(p => true).ToList();
+            ListaCobros = CobrosBLL.GetList(p => true).ToList();
         }
         else if (Index == 1)
         {
 
-            ListaVentas = VentasBLL.GetList(p => p.VentaId == int.Parse(Criterio)).ToList();
+            ListaCobros = CobrosBLL.GetList(p => p.CobroId == int.Parse(Criterio)).ToList();
 
         }
         else if (Index == 2)
         {
-            ListaVentas = VentasBLL.GetList(p => p.ClienteId == int.Parse(Criterio)).ToList();
+            ListaCobros = CobrosBLL.GetList(p => p.ClienteId == int.Parse(Criterio)).ToList();
         }
 
     }
@@ -136,16 +137,16 @@
         bool Paso;
 
 
-            Paso = VentasBLL.Eliminar(id);
+        Paso = VentasBLL.Eliminar(id);
 
-            if (Paso)
-            {
-                Actualizar();
-                toast.ShowSuccess("Transacción exitosa!");
-            }
-            else
-                toast.ShowError("No fue posible Eliminar esta venta.");
-            return;
+        if (Paso)
+        {
+            Actualizar();
+            toast.ShowSuccess("Transacción exitosa!");
+        }
+        else
+            toast.ShowError("No fue posible Eliminar esta venta.");
+        return;
     }
 
 }
