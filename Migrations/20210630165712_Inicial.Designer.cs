@@ -9,7 +9,7 @@ using Parcial2_apd2_20180906.DAL;
 namespace Parcial2_apd2_20180906.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20210628181142_Inicial")]
+    [Migration("20210630165712_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,6 +62,7 @@ namespace Parcial2_apd2_20180906.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Observaciones")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<double>("TotalCobro")

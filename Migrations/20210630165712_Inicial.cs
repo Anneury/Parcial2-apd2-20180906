@@ -46,7 +46,7 @@ namespace Parcial2_apd2_20180906.Migrations
                     ClienteId = table.Column<int>(type: "INTEGER", nullable: false),
                     Totales = table.Column<decimal>(type: "TEXT", nullable: false),
                     TotalCobro = table.Column<double>(type: "REAL", nullable: false),
-                    Observaciones = table.Column<string>(type: "TEXT", nullable: true)
+                    Observaciones = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

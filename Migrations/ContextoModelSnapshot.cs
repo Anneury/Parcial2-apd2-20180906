@@ -60,6 +60,7 @@ namespace Parcial2_apd2_20180906.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Observaciones")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<double>("TotalCobro")
