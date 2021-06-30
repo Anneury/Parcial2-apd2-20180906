@@ -135,9 +135,14 @@
     Cobros Cobro = new Cobros();
     List<Clientes> ListaClientes = new List<Clientes>();
 
+    protected override void OnInitialized()
+    {
+        Nuevo();
+    }
+
     public void Nuevo()
     {
-
+        Cobro = new Cobros();
     }
     public void Eliminar()
     {
