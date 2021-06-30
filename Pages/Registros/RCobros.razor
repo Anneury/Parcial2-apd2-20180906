@@ -12,14 +12,14 @@
     <DataAnnotationsValidator />
 
     <div class="card">
-        <div class="card-header bg-info">
-            <h4 class="text-white">Cobros Detalle</h4>
+        <div class="card-header" style="background: #324A5F">
+            <h1 style="color:white">Registro de Cobros</h1>
         </div>
         <div class="card-body">
 
             <div class="row">
                 <div class="col form-group" align="left">
-                    <label>Cobro Id</label>
+                    <label>Cobro Id:</label>
                     <div class="input-group">
                         <InputNumber @bind-Value="Cobro.CobroId" class="form-control" />
                         <div class="input-group-append">
@@ -35,24 +35,28 @@
 
 
                 @*Fecha*@
-                <div class="col form-group" align="right">
-                    <label>Fecha</label>
+                <div class="col form-group" >
+                    <label>Fecha:</label>
                     <InputDate @bind-Value="Cobro.Fecha" class="form-control" />
                 </div>
 
             </div>
 
-            @*Suplidor*@
+            @*Cliente*@
             <div class="form-group">
-                <label>Suplidor</label>
+                <label>Cliente:</label>
                 <InputSelect @bind-Value="Cobro.ClienteId" class="form-control">
-                    <option value="0" disabled selected>Seleccionar Suplidor</option>
+                    <option value="0" disabled selected>Seleccionar Cliente</option>
                     @foreach (var item in ListaClientes)
                     {
                         <option value="@item.ClienteId">@item.Nombres</option>
                     }
                 </InputSelect>
                 <ValidationMessage For="(() => Cobro.ClienteId)" />
+            </div>
+
+            <div class="card-header bg-info">
+                <h4 class="text-white">Cobros Detalle</h4>
             </div>
 
             <div class="table-responsive text-nowrap" style="position: relative; height:200px; overflow: auto; display: block;">
@@ -86,7 +90,7 @@
                 <div class="row align-items-center">
                     <div class="col">
                         <div class="form-group row m-1">
-                            <label class="col-form-label">Totales</label>
+                            <label class="col-form-label">Totales:</label>
                             <div class="input-group col-sm-3">
                                 <InputNumber @bind-Value="Cobro.Totales" readonly class="form-control" />
                             </div>
@@ -143,6 +147,7 @@
     public void Nuevo()
     {
         Cobro = new Cobros();
+        ListaClientes = ClientesBLL.GetList(e => true);
     }
     public void Eliminar()
     {

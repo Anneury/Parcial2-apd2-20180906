@@ -29,7 +29,7 @@
             <div class="col form-group">
                 <label>Criterio:</label>
                 <div class="input-group">
-                    <input class="form-control" type="number" @bind-value="Criterio" placeholder="Ingrese el criterio a filtrar para obtener la venta deseada" />
+                    <input class="form-control" type="@(Index == 1 || Index == 2 ? "number" : "text")" @bind-value="Criterio" placeholder="Ingrese el criterio a filtrar para obtener la venta deseada" />
                     <div class="input-group-append">
                         <button class="btn btn-primary" @onclick="Buscar"><i class="oi oi-magnifying-glass" />
                             Filtrar
@@ -43,7 +43,7 @@
         @if (ListaVentas == null)
         {
             <div class="form-group">
-                <h2>No Posee datos... Agrega productos.</h2>
+                <h2>No Posee datos... Agrega Ventas.</h2>
             </div>
         }
         else
@@ -97,7 +97,7 @@
 @code {
     public int Index = -1;
     public double TotalBalance;
-    public int Criterio;
+    public string Criterio;
     List<Ventas> ListaVentas = new List<Ventas>();
 
     protected override void OnInitialized()
@@ -118,12 +118,12 @@
         else if (Index == 1)
         {
 
-            ListaVentas = VentasBLL.GetList(p => p.VentaId == Criterio).ToList();
+            ListaVentas = VentasBLL.GetList(p => p.VentaId == int.Parse(Criterio)).ToList();
 
         }
         else if (Index == 2)
         {
-            ListaVentas = VentasBLL.GetList(p => p.ClienteId == Criterio).ToList();
+            ListaVentas = VentasBLL.GetList(p => p.ClienteId == int.Parse(Criterio)).ToList();
         }
 
     }
