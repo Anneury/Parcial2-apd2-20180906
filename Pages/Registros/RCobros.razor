@@ -147,20 +147,16 @@
     protected override void OnInitialized()
     {
         Nuevo();
+        if (CobroId > 0)
+            Cobro = CobrosBLL.Buscar(CobroId);
     }
 
     public void Nuevo()
     {
         Cobro = new Cobros();
         ListaClientes = ClientesBLL.GetList(e => true);
-        
-        if (CobroId > 0)
-            Actualizar();
     }
-    public void Actualizar()
-    {
-        Cobro = CobrosBLL.Buscar(CobroId);
-    }
+
     public void Buscar()
     {
         if (Cobro.CobroId > 0)
