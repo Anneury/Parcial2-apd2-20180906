@@ -76,9 +76,8 @@
                                 <td>@cont.TotalCobro</td>
                                 <td>@cont.Observaciones</td>
                                 <td>
-                                    <button class="btn  btn-danger" @onclick="() => Eliminar(cont.CobroId)">
-                                        <i class="oi oi-trash" aria-hidden="true"></i>
-                                    </button>
+                                    <a href="@($"Cobros/{cont.CobroId}")">Ver cobro</a>
+                                    <button class="btn btn-primary" href="@($"Cobros/{cont.CobroId}")"></button>
                                 </td>
                             </tr>
                             TotalCobrado += cont.TotalCobro;
@@ -91,7 +90,7 @@
     </div>
     <div class="card-footer">
         <div class="form-group text-left">
-            <label>Balance total: @TotalCobrado</label>
+            <label>Total cobrado: @TotalCobrado</label>
         </div>
         <h6 style="text-align:right">Hecho por Anneury Sosa...</h6>
     </div>

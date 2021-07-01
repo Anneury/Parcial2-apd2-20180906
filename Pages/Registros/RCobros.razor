@@ -139,7 +139,7 @@
 
 @code {
     [Parameter]
-    public int CobroId { get; set; }
+    public int CobroId { get; set; } = 0;
     int VecesSeleccionado = 0;
     Cobros Cobro = new Cobros();
     List<Clientes> ListaClientes = new List<Clientes>();
@@ -153,8 +153,14 @@
     {
         Cobro = new Cobros();
         ListaClientes = ClientesBLL.GetList(e => true);
+        
+        if (CobroId > 0)
+            Actualizar();
     }
-
+    public void Actualizar()
+    {
+        Cobro = CobrosBLL.Buscar(CobroId);
+    }
     public void Buscar()
     {
         if (Cobro.CobroId > 0)
