@@ -163,6 +163,9 @@
         if (Cobro.CobroId > 0)
         {
             var cobro = CobrosBLL.Buscar(Cobro.CobroId);
+
+            Cobro.Detalle = VentasBLL.ObetenerVentasPagadas(Cobro.ClienteId);
+
             if (cobro != null)
                 this.Cobro = cobro;
             else
@@ -197,7 +200,7 @@
         }
         else
         {
-            Toast.ShowWarning("No puedes modificar los cobros.");
+            Toast.ShowWarning("No puedes modificar los cobros. Recuerda poner un ( 0 ) en el Cobro Id para guardar!");
         }
     }
     public void Eliminar()
@@ -219,11 +222,14 @@
         if (Cobro.ClienteId == 0)
             return;
 
+        Cobro.Observaciones = string.Empty;
+        Cobro.TotalCobro = 0;
+        Cobro.Totales = 0;
+
         Cobro.Detalle = VentasBLL.ObetenerVentasPendientes(Cobro.ClienteId);
     }
     public void Cobrar(CobrosDetalle cobrosDetalle)
     {
-        Toast.ShowInfo(" esto es lo que coje el cliente "+ Cobro.ClienteId);
         if(cobrosDetalle.Cobrado == 0)
         {
             cobrosDetalle.Cobrado = cobrosDetalle.Venta.Balance;
