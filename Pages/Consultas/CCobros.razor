@@ -84,7 +84,6 @@
                                     <button class="btn  btn-danger" @onclick="() => Eliminar(cont.CobroId)">
                                         <i class="oi oi-trash" aria-hidden="true"></i>
                                     </button>
-                                    @*<a href="@($"Cobros/{cont.CobroId}")">Ver cobro</a>*@
                                 </td>
                             </tr>
                             TotalCobrado += cont.TotalCobro;
@@ -119,7 +118,7 @@
     }
     public void Editar(int Id)
     {
-        Nav.NavigateTo($"/RProductos/{Id}");
+        Nav.NavigateTo($"/Cobros/{Id}");
     }
     void Buscar()
     {
@@ -146,7 +145,7 @@
         bool Paso;
 
 
-        Paso = VentasBLL.Eliminar(id);
+        Paso = CobrosBLL.Eliminar(id);
 
         if (Paso)
         {

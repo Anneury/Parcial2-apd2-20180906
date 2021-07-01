@@ -64,11 +64,6 @@
                             <tr>
                                 <td>@cont.ClienteId</td>
                                 <td>@cont.Nombres</td>
-                                <td>
-                                    <button class="btn  btn-danger" @onclick="() => Eliminar(cont.ClienteId)">
-                                        <i class="oi oi-trash" aria-hidden="true"></i>
-                                    </button>
-                                </td>
                             </tr>
                         }
                     </tbody>
@@ -113,24 +108,6 @@
             ListaClientes = ClientesBLL.GetList(p => p.Nombres.Contains(Criterio)).ToList();
         }
 
-    }
-
-
-    private void Eliminar(int id)
-    {
-        bool Paso;
-
-
-        Paso = ClientesBLL.Eliminar(id);
-
-        if (Paso)
-        {
-            Actualizar();
-            toast.ShowSuccess("Transacción exitosa!");
-        }
-        else
-            toast.ShowError("No fue posible Eliminar este cliente.");
-        return;
     }
 
 }

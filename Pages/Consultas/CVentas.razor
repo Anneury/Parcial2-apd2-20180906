@@ -73,11 +73,6 @@
                                 <td>@cont.ClienteId</td>
                                 <td>@cont.Monto</td>
                                 <td>@cont.Balance</td>
-                                <td>
-                                    <button class="btn  btn-danger" @onclick="() => Eliminar(cont.VentaId)">
-                                        <i class="oi oi-trash" aria-hidden="true"></i>
-                                    </button>
-                                </td>
                             </tr>
                             TotalBalance += cont.Balance;
                         }
