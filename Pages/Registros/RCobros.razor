@@ -80,8 +80,7 @@
                                 <td>@item.Venta.Monto</td>
                                 <td>@item.Venta.Balance</td>
                                 <td>@item.Cobrado</td>
-                                <th><input type="checkbox" /></th>
-
+                                <th><input type="checkbox" @onchange="@(() => Cobrar(item))" /></th>
                             </tr>
                         }
                     </tbody>
@@ -141,6 +140,7 @@
 @code {
     [Parameter]
     public int CobroId { get; set; }
+    int VecesSeleccionado = 0;
     Cobros Cobro = new Cobros();
     List<Clientes> ListaClientes = new List<Clientes>();
 
@@ -217,5 +217,20 @@
             return;
 
         Cobro.Detalle = VentasBLL.ObetenerVentasPendientes(Cobro.ClienteId);
+    }
+    public void Cobrar(CobrosDetalle cobrosDetalle)
+    {
+        if(cobrosDetalle.Cobrado == 0)
+        {
+            cobrosDetalle.Cobrado = cobrosDetalle.Venta.Balance;
+            Cobro.TotalCobro += cobrosDetalle.Cobrado;
+            Cobro.Totales++;
+        }
+        else
+        {
+            cobrosDetalle.Cobrado = 0;
+            Cobro.TotalCobro -= cobrosDetalle.Venta.Balance;
+            Cobro.Totales--;
+        }
     }
 }
