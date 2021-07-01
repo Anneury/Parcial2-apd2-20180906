@@ -30,8 +30,6 @@ namespace Parcial2_apd2_20180906.Models
         {
             CobroId = 0;
             Fecha = DateTime.Now.Date;
-            ClienteId = 0;
-            Cliente = new Clientes();
             Totales = 0;
             TotalCobro = 0;
             Observaciones = string.Empty;

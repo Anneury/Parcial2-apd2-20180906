@@ -140,6 +140,7 @@
 @code {
     [Parameter]
     public int CobroId { get; set; } = 0;
+    int clienteId;
     int VecesSeleccionado = 0;
     Cobros Cobro = new Cobros();
     List<Clientes> ListaClientes = new List<Clientes>();
@@ -222,6 +223,7 @@
     }
     public void Cobrar(CobrosDetalle cobrosDetalle)
     {
+        Toast.ShowInfo(" esto es lo que coje el cliente "+ Cobro.ClienteId);
         if(cobrosDetalle.Cobrado == 0)
         {
             cobrosDetalle.Cobrado = cobrosDetalle.Venta.Balance;

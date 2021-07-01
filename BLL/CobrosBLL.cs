@@ -51,7 +51,7 @@ namespace Parcial2_apd2_20180906.BLL
                 {
                     item.Venta = contexto.Ventas.Find(item.VentaId);
                     item.Venta.Balance -= item.Cobrado;
-                    contexto.Entry(item.Venta).State = EntityState.Modified;
+                    VentasBLL.Guardar(item.Venta);
                 }
 
                 contexto.Cobros.Add(cobros);
