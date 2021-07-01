@@ -45,7 +45,7 @@
             @*Cliente*@
             <div class="form-group">
                 <label>Cliente:</label>
-                <InputSelect @bind-Value="Cobro.ClienteId" class="form-control">
+                <InputSelect @bind-Value="Cobro.ClienteId" class="form-control" @onclick="CobrosPendientes">
                     <option value="0" disabled selected>Seleccionar Cliente</option>
                     @foreach (var item in ListaClientes)
                     {
@@ -210,5 +210,12 @@
         }
         else
             Toast.ShowError("No fue posible eliminar esta orden.");
+    }
+    public void CobrosPendientes()
+    {
+        if (Cobro.ClienteId == 0)
+            return;
+
+        Cobro.Detalle = VentasBLL.ObetenerVentasPendientes(Cobro.ClienteId);
     }
 }
