@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Parcial2_apd2_20180906.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class Inincial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

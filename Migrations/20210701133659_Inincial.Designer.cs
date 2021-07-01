@@ -9,8 +9,8 @@ using Parcial2_apd2_20180906.DAL;
 namespace Parcial2_apd2_20180906.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20210630165712_Inicial")]
-    partial class Inicial
+    [Migration("20210701133659_Inincial")]
+    partial class Inincial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
