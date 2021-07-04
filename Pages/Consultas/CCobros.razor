@@ -141,21 +141,26 @@
     }
 
 
-    private void Eliminar(int id)
+    async Task Eliminar(int id)
     {
-        bool Paso;
+        Nav.ToAbsoluteUri($"Cobros/{id}");
 
+        bool confirmed = await Confirmacion.InvokeAsync<bool>("confirm", "Deseas eliminar este Cobro?");
 
-        Paso = CobrosBLL.Eliminar(id);
-
-        if (Paso)
+        if (confirmed)
         {
-            Actualizar();
-            toast.ShowSuccess("Transacción exitosa!");
+            bool eliminado;
+            eliminado = CobrosBLL.Eliminar(id);
+
+            if (eliminado)
+            {
+                Actualizar();
+                toast.ShowSuccess("Transacción exitosa!");
+            }
+            else
+                toast.ShowError("No fue posible Eliminar este Registro.");
+            return;
         }
-        else
-            toast.ShowError("No fue posible Eliminar esta venta.");
         return;
     }
-
 }
